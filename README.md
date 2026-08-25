@@ -1,4 +1,4 @@
-# bumper-pdd-design
+# bumper-PDD-design
 
 범퍼 강건 설계 종합설계 프로젝트에서 쓰는 PDD(Polynomial Dimensional Decomposition) 서로게이트 모델링 코드.
 
