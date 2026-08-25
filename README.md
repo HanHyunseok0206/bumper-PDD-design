@@ -4,7 +4,7 @@
 
 ## 파일
 
-- `PDD_Legendre_ver4.ipynb`: 르장드르 다항식 기반 PDD 구현체. 팀원과 같이 작업.
+- `PDD_Legendre_ver4.ipynb`: 르장드르 다항식 기반 PDD 구현.
 
 ## 노트북 구성
 
