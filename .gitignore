@@ -9,3 +9,6 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# 로컬에서만 쓰는 Claude Code 세션 지침 (GUIDELINE.md를 import함)
+CLAUDE.md
