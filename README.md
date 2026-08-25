@@ -28,6 +28,16 @@ Ishigami 함수(3변수 벤치마크)로 이론적 Sobol 지수와 대조해서 
 
 - numpy, pandas
 
+## Claude Code로 이어서 작업할 때
+
+작업 지침은 `GUIDELINE.md`에 있음. Claude Code는 `CLAUDE.md`라는 파일을 세션 시작 시 자동으로 읽는데, 이 파일은 의도적으로 저장소에 올리지 않았음(로컬 전용). 새 컴퓨터에서 clone한 뒤에는 저장소 루트에 `CLAUDE.md` 파일을 만들고 아래 한 줄만 넣으면 됨:
+
+```
+@GUIDELINE.md
+```
+
+이 파일 없이 그냥 시작해도, 새 채팅에서 "GUIDELINE.md 읽고 이어서 진행해줘"라고 한 번 말해주면 동일하게 작동함.
+
 ## 진행 상황 / 다음 단계
 
 - [x] Legendre 기반 PDD 및 Sobol 지수 계산 로직 검증 (Ishigami 벤치마크)
