@@ -1,0 +1,11 @@
+# 하계강습회 배포 자료 (RED Lab, Hanyang University) — 재배포 권한 불확실이라 버전관리 대상에서 제외
+(2일차)*
+*.zip
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
