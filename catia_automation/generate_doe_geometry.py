@@ -16,8 +16,12 @@ generate_doe_geometry.py
   - Symmetry of Part3_1.CATPart(대칭 복사본)는 파라미터가 없는 Assemble 결과물이라
     이 스크립트에서 다루지 않음 -> 대칭 인스턴스는 Abaqus 어셈블리 단계에서 처리
   - doe_points.csv의 마지막 2열(yield_strength_delta, thickness_tolerance)은
-    noise 변수라 CATIA 형상에는 반영하지 않음 (yield_strength_delta는 Abaqus 재질
-    카드로, thickness_tolerance는 형상 vs 쉘 두께 반영 여부가 아직 미확정이라 일단 제외)
+    noise 변수라 CATIA 형상에는 반영하지 않음 (확정, 케드 자동화 준비 세션 논의):
+    yield_strength_delta는 Abaqus 재질 카드에서만 반영. thickness_tolerance는
+    Abaqus 쉘 section thickness에서 thickness_actual = t_beam(또는 t_box) +
+    thickness_tolerance 로 반영 — CATIA 형상을 공차 단위(±0.1mm)로 재생성하면
+    메셔가 매번 미묘하게 다른 요소 토폴로지를 만들어서 "공차 효과"와 "메시 노이즈"가
+    섞이는 문제가 있어, section thickness만 바꿔 메시는 고정하고 공차 효과만 분리함
   - Part.update()는 극단적인 DOE 점에서 실패할 수 있음(beam_height LB 근처에서 실제
     확인됨) -> 실패하면 해당 점은 건너뛰고 로그만 남김
   - 원본 CATPart 마스터 파일을 계속 덮어쓰지 않도록 이 스크립트에서는 doc.save()를
