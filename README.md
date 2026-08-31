@@ -16,7 +16,7 @@
 - `validation_and_benchmarks/PDD_vs_Kriging_benchmark.ipynb`: PDD vs 크리깅 정확도 비교
 - `validation_and_benchmarks/Kriging_pipeline_demo.ipynb`: 크리깅 파이프라인 합성 데이터 검증
 
-연구 진행 상황·컨벤션은 `GUIDELINE.md`, 논문/발표자료 초안은 `PAPER.md` 참고.
+연구 진행 상황·컨벤션은 `docs/GUIDELINE.md`, 논문/발표자료 초안은 `docs/PAPER.md` 참고.
 
 ## 노트북 구성 (`validation_and_benchmarks/PDD_Legendre_ver4.ipynb`)
 
