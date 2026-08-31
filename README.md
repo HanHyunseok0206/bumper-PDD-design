@@ -38,7 +38,11 @@ Ishigami 함수(3변수 벤치마크)로 이론적 Sobol 지수와 대조해서 
 
 ## 의존성
 
-- numpy, pandas
+`docs/requirements.txt` 참고. 설치:
+
+```
+pip install -r docs/requirements.txt
+```
 
 ## 진행 상황 / 다음 단계
 
