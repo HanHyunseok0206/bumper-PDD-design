@@ -91,7 +91,7 @@ PDD 구현체의 정확성은 실제 데이터 적용에 앞서, 이론적으로
 | PDD | 0.930 | 0.208 |
 | 크리깅 | 0.965 | 0.147 |
 
-비교 결과 크리깅이 더 높은 정확도를 보였으며, 특히 응답이 급격히 꺾이는 지점 부근에서 PDD는 곡선을 뭉툭하게 뭉개는 반면 크리깅은 실제 꺾임을 더 근접하게 추적했다(`PDD_vs_Kriging_benchmark.ipynb`의 시각화 참고). 이 결과를 바탕으로 본 연구에서는 **PDD는 변수 민감도 분석(스크리닝) 용도로, 실제 예측 서로게이트는 크리깅으로** 역할을 분담했다.
+비교 결과 크리깅이 더 높은 정확도를 보였으며, 특히 응답이 급격히 꺾이는 지점 부근에서 PDD는 곡선을 뭉툭하게 뭉개는 반면 크리깅은 실제 꺾임을 더 근접하게 추적했다(`validation_and_benchmarks/PDD_vs_Kriging_benchmark.ipynb`의 시각화 참고). 이 결과를 바탕으로 본 연구에서는 **PDD는 변수 민감도 분석(스크리닝) 용도로, 실제 예측 서로게이트는 크리깅으로** 역할을 분담했다.
 
 *(주의: 이 비교는 합성 벤치마크 기준이며, 변수 간 상호작용이 없거나 크리깅 커널을 부적절하게 고정할 경우 반대의 결과가 나올 수 있음을 확인했다. 실제 범퍼 SEA 데이터에서도 이 비교를 동일하게 재현해 확인할 예정이다.)*
 
@@ -128,8 +128,8 @@ PDD 구현체의 정확성은 실제 데이터 적용에 앞서, 이론적으로
 | 논문 절 | 관련 파일 |
 |---|---|
 | 3.3 (실험계획법) | `DOE_sampling.ipynb` |
-| 2.1, 3.4 (PDD 검증 및 민감도 분석) | `PDD_Legendre_ver4.ipynb`, `PDD_bumper_SEA.ipynb` |
-| 3.5 (PDD vs 크리깅 비교) | `PDD_vs_Kriging_benchmark.ipynb` |
+| 2.1, 3.4 (PDD 검증 및 민감도 분석) | `validation_and_benchmarks/PDD_Legendre_ver4.ipynb`, `PDD_bumper_SEA.ipynb` |
+| 3.5 (PDD vs 크리깅 비교) | `validation_and_benchmarks/PDD_vs_Kriging_benchmark.ipynb` |
 | 3.5, 3.6 (크리깅 서로게이트, 강건 목적함수·최적화) | `Kriging_bumper_SEA.ipynb` |
 | 3.7 (능동학습·베이지안 최적화, 미구현) | *(노트북 미작성)* — 검토 내용은 `GUIDELINE.md` "AI 요소 추가" 절 |
 | 전체 연구 방향·진행 상황 | `GUIDELINE.md` |

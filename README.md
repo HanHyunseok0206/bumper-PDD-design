@@ -4,9 +4,21 @@
 
 ## 파일
 
-- `PDD_Legendre_ver4.ipynb`: 르장드르 다항식 기반 PDD 구현.
+실제 파이프라인에서 쓰는 노트북(순서대로):
 
-## 노트북 구성
+- `DOE_sampling.ipynb`: 실험계획법(DOE) 샘플 생성
+- `PDD_bumper_SEA.ipynb`: PDD 기반 민감도 분석
+- `Kriging_bumper_SEA.ipynb`: 크리깅 서로게이트 + 강건 최적화
+
+검증·베이스라인·비교용 노트북은 `validation_and_benchmarks/`에 따로 모아둠:
+
+- `validation_and_benchmarks/PDD_Legendre_ver4.ipynb`: 르장드르 다항식 기반 PDD 구현체 검증(Ishigami 벤치마크)
+- `validation_and_benchmarks/PDD_vs_Kriging_benchmark.ipynb`: PDD vs 크리깅 정확도 비교
+- `validation_and_benchmarks/Kriging_pipeline_demo.ipynb`: 크리깅 파이프라인 합성 데이터 검증
+
+연구 진행 상황·컨벤션은 `GUIDELINE.md`, 논문/발표자료 초안은 `PAPER.md` 참고.
+
+## 노트북 구성 (`validation_and_benchmarks/PDD_Legendre_ver4.ipynb`)
 
 - `basis(x, a)`: 표준 르장드르 다항식을 점화식으로 계산 (0~a차)
 - `PDD(x, n, y)`: 입력 `x`(dim × N)에 대해 1변수(단독), 2변수, 3변수 상호작용 항까지 포함한 PDD 기저 행렬을 생성. `n`은 항의 최대 차수, `y`는 고려할 상호작용 변수 개수(1=단독항만, 2=2변수 교호작용까지, 3=3변수까지)
