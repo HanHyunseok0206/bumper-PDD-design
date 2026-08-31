@@ -2,6 +2,9 @@
 (2일차)*
 *.zip
 
+# 공유용 자료 (RED_UQ 라이브러리 등) — 재배포 권한 불확실 + 대용량 CSV 포함이라 제외
+공유용/
+
 # Python / Jupyter
 __pycache__/
 *.pyc
