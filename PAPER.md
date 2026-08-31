@@ -76,7 +76,7 @@ maximize   J(x) = mean(SEA) − κ · std(SEA)
 
 ### 3.3 실험계획법(DOE)
 
-*(작성 예정 — Latin Hypercube Sampling 기반 DOE 생성 유틸은 `Kriging_bumper_SEA.ipynb`에 구현됨)*
+*(작성 예정 — Latin Hypercube Sampling 기반 DOE 생성은 `DOE_sampling.ipynb`에 구현됨. 파이프라인에서 제일 먼저 실행하는 노트북)*
 
 ### 3.4 PDD 기반 민감도 분석
 
@@ -127,6 +127,7 @@ PDD 구현체의 정확성은 실제 데이터 적용에 앞서, 이론적으로
 
 | 논문 절 | 관련 파일 |
 |---|---|
+| 3.3 (실험계획법) | `DOE_sampling.ipynb` |
 | 2.1, 3.4 (PDD 검증 및 민감도 분석) | `PDD_Legendre_ver4.ipynb`, `PDD_bumper_SEA.ipynb` |
 | 3.5 (PDD vs 크리깅 비교) | `PDD_vs_Kriging_benchmark.ipynb` |
 | 3.5, 3.6 (크리깅 서로게이트, 강건 목적함수·최적화) | `Kriging_bumper_SEA.ipynb` |
