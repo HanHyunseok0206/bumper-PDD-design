@@ -48,6 +48,7 @@ pip install -r docs/requirements.txt
 
 - [x] Legendre 기반 PDD 및 Sobol 지수 계산 로직 검증 (Ishigami 벤치마크)
 - [x] 학습/검증 분리 기반 차수 선택으로 변경 (과적합 방지)
-- [ ] 카티아 범퍼 모델 설계변수 + FE 해석(SEA) 결과로 실데이터 적용
+- [x] 카티아 범퍼 모델 설계변수 + FE 해석(SEA) 결과로 실데이터 적용 (2026-09-23 기준 2차 DOE 603 trial 확보, PDD·크리깅 예비 분석 완료 — 상세는 `docs/GUIDELINE.md` 진행 상황 참고)
+- [ ] PDD 민감도 결과로 DESIGN_IDX/NOISE_IDX 확정 → 크리깅 최종 서로게이트 구축
 - [ ] PDD 계수 기반 mean/variance로 강건 최적화(RDO) 목적함수 구성
 - [ ] 최적점 카티아/FE 재해석으로 서로게이트 검증
