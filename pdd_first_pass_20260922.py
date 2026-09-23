@@ -164,7 +164,7 @@ def main():
     exp_full, mapping = PDD(X_scaled, best_n, best_y)
     Ci = np.linalg.pinv(exp_full) @ Y
     train_r2 = 1 - np.sum((Y - exp_full @ Ci) ** 2) / np.sum((Y - Y.mean()) ** 2)
-    print(f"\n전체 학습 R2(참고용, 과신 금지): {train_r2:.4f}")
+    print(f"\n전체 학습 R2(참고용): {train_r2:.4f}")
 
     sens = get_sobol2_fixed(Ci, mapping, exp_full)
     rows = []
