@@ -1,15 +1,12 @@
 """
 pdd_second_pass_20260923.py
 
-목적: 팀원이 전달한 2차 DOE 결과(doe_results_raw_20260923.csv, 603 trial)로 PDD 민감도 분석을
-      재실행하고, 1차(90개, doe_results_raw_20260922.csv)와 비교. 함수(basis/PDD/get_sobol2_fixed/
-      find_optimal_degree/min_max_scale)는 pdd_first_pass_20260922.py와 동일, import해서 재사용.
+목적: 2차 DOE 결과(doe_results_raw_20260923.csv, 603 trial)로 PDD 민감도 분석을
+      재실행하고, 1차 doe와 비교. 함수는 pdd_first_pass_20260922.py와 동일
 
       2차 데이터 특징(1차 대비):
         - 표본 603개 (1차는 클리닝 후 90개, 약 6~7배)
         - 설계변수 변동폭이 B1~C8은 공칭값 대비 ~13%(1차 ~1.7~3.3%)로 대폭 확대됨.
-          단 C9(~1.24%)·C10(~0.95%)은 오히려 1차보다도 더 좁음 — 의도한 건지 확인 필요.
-        - SEA=0/Internal_Energy 이상치 없음 (1차는 9+1건 제외 후 90개였음)
         
 """
 
@@ -36,11 +33,10 @@ def run_pdd(df, label, max_n=6, max_y=2, n_seeds=10):
     N = X_scaled.shape[1]
 
     best_n, best_y, best_r2, log = find_optimal_degree(X_scaled, Y, max_n=max_n, max_y=max_y, seed=0)
-    # np.float64를 그대로 리스트에 담으면 repr이 "np.float64(0.123)"으로 찍혀서 지저분함 -> float()로 캐스팅
     r2s = [float(find_optimal_degree(X_scaled, Y, max_n=max_n, max_y=max_y, seed=s)[2]) for s in range(n_seeds)]
 
     exp_full, mapping = PDD(X_scaled, best_n, best_y)
-    k = exp_full.shape[1]  # 절편 포함 파라미터(회귀계수) 개수
+    k = exp_full.shape[1]  # 절편 포함 파라미터(회귀계수) 개수 
     Ci = np.linalg.pinv(exp_full) @ Y
     train_r2 = float(1 - np.sum((Y - exp_full @ Ci) ** 2) / np.sum((Y - Y.mean()) ** 2))
     cv_mean = float(np.mean(r2s))

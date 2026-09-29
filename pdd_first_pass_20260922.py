@@ -1,20 +1,9 @@
 """
 pdd_first_pass_20260922.py
 
-목적: 팀원이 아바쿠스에서 처음 전달한 1차 DOE 결과(doe_results_raw_20260922.csv, 100 trial)로
-      PDD 민감도 분석을 시도해본 첫 기록. 논문 작성 시 데이터 클리닝/노이즈 이슈 절 근거로 참고.
-      docs/GUIDELINE.md "진행 상황"(2026-09-22) 항목과 함께 볼 것.
+목적:  1차 DOE 결과(doe_results_raw_20260922.csv, 100 trial)로
+      PDD 민감도 분석을 시도해본 첫 기록_한현석
 
-중요: 이 데이터의 변수명(B1~B9, C1~C10)은 레포의 doe_points.csv/generate_doe_geometry.py가
-      쓰는 9변수 체계(t_beam, beam_radius, ...)와 다름. 각 번호가 정확히 어느 위치/파라미터인지,
-      LB/UB가 얼마인지 아직 팀원 확인 전이라, 여기서는 표본 min/max로만 스케일링함
-      (GUIDELINE 원칙상 이론적 정의역을 써야 하지만 아직 모름 — 확인되면 PDD_bumper_SEA.ipynb의
-      theoretical_scale로 교체할 것).
-
-핵심 함수(basis, PDD, get_sobol2, find_optimal_degree)는 PDD_bumper_SEA.ipynb /
-validation_and_benchmarks/PDD_Legendre_ver4.ipynb와 동일, 수정 없음.
-get_sobol2만 dim>=10에서 키가 겹치는 문제(예: "S17"이 변수17 단독인지 변수1+7 상호작용인지
-구분 안 됨)가 있어 구분자를 넣은 버전(get_sobol2_fixed)으로 교체함.
 """
 
 import numpy as np
@@ -22,7 +11,7 @@ import pandas as pd
 
 
 def min_max_scale(x, min_val=-1, max_val=1):
-    # 표본의 경험적 min/max로 스케일링. 실제 정의역(LB/UB)을 알면 theoretical_scale을 쓸 것.
+    # 표본의 경험적 min/max로 스케일링. 실제 정의역(LB/UB)을 알면 theoretical_scale을 쓸 것. (데이터 보고 판단 필요)
     x_min = x.min(axis=1, keepdims=True)
     x_max = x.max(axis=1, keepdims=True)
     range_mask = (x_max - x_min) == 0
@@ -87,7 +76,7 @@ def get_sobol2_fixed(Ci, mapping, exp_input):
 
 
 def find_optimal_degree(X, Y, max_n=6, max_y=2, val_ratio=0.2, patience=3, tol=1e-4, seed=0):
-    # 학습/검증 분리 기반 차수 선택 (학습 R^2만으로 고르면 과적합됨 — CLAUDE.md 참고)
+    # 학습/검증 분리 기반 차수 선택 (학습 R^2만으로 고르면 과적합되는 점을 조심해야함)
     rng = np.random.default_rng(seed)
     Nc = X.shape[1]
     perm = rng.permutation(Nc)
@@ -130,12 +119,11 @@ VAR_COLS = ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9",
 def load_clean_data(csv_path):
     df = pd.read_csv(csv_path)
 
-    # 1차 필터: SEA=0 (메싱 실패, 팀원이 이미 인지한 케이스)
+    # 1차 필터: SEA=0 
     df_valid = df[df["SEA"] != 0].copy()
 
-    # 2차 필터: SEA=0은 아니지만 Internal_Energy가 나머지 대비 8배가량 낮은 Trial 1.
+    # 2차 필터: SEA=0은 아니지만 Internal_Energy가 나머지 대비 8배가량 낮은 케이스 판별
     # 크래시 펄스가 정상적으로 전개되지 못한 채 해석이 종료된 것으로 판단해 추가 제외함
-    # (SEA=0 필터만으로는 이런 케이스가 안 걸린다는 게 이번에 확인한 점).
     median_ie = df_valid["Internal_Energy"].median()
     df_valid = df_valid[df_valid["Internal_Energy"] > median_ie * 0.5].reset_index(drop=True)
 
