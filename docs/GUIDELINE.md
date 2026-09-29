@@ -112,8 +112,10 @@
 - [x] `PDD_bumper_SEA.ipynb`를 PDD 민감도 분석 전용으로 범위 축소, 나머지는 참고용으로 표시
 - [x] `Kriging_bumper_SEA.ipynb` 골격 작성 (LHS DOE 생성, 크리깅 적합+검증, 강건 목적함수, 최적화)
 - [x] `validation_and_benchmarks/PDD_vs_Kriging_benchmark.ipynb`로 합성 벤치마크(변수 상호작용 있는 꺾인 함수) 비교 — 크리깅 R²=0.965 vs PDD R²=0.930으로 지도교수 지침을 실증. (주의: 벤치마크 함수가 순수 additive/커널 nu 고정이면 반대로 PDD가 이길 수도 있음 확인함 — 실제 데이터에서도 반드시 홀드아웃 검증으로 재확인할 것)
-- [ ] 카티아 설계변수 자동 형상 생성 매크로 준비
-- [ ] 아바쿠스 FE 해석 자동화(job 생성·제출) 및 결과(SEA/PCF/질량) 추출 스크립트 준비
+- [x] 카티아 설계변수 자동 형상 생성 매크로 준비 (→ 방향 전환, 2026-09-29 확인)
+  - 원래 계획은 카티아에서 `catia_automation/generate_doe_geometry.py`로 설계변수마다 형상을 재생성해 FE로 넘기는 것이었으나, **팀원이 이 방식을 쓰지 않기로 결정**함. 대신 아바쿠스 안에서 파라미터를 직접 정의하고, 그 파라미터들의 min/max 범위를 잡아 그 안에서 DOE(점 샘플링)를 진행 중 — 즉 형상 파라미터화·DOE 샘플링·해석이 카티아 왕복 없이 아바쿠스 쪽에서 한 번에 이뤄짐. 1~3차 DOE(100/603/4949 trial)가 전부 이 방식으로 생성된 것으로 이제 확인됨. `catia_automation/`·`doe_points.csv`(9변수 체계)는 이 파이프라인에서 더 이상 쓰이지 않으므로 참고용으로만 남겨둠 — B1~C10 19변수 체계와 이름이 안 맞았던 이유도 이걸로 설명됨(애초에 카티아 변수 체계가 아니었음).
+- [x] 아바쿠스 FE 해석 자동화(job 생성·제출) 및 결과(SEA/PCF/질량) 추출 스크립트 준비 (→ 완료로 확인, 2026-09-29)
+  - 팀원 쪽에서 이미 안정적으로 동작 중 — 1~3차 DOE(최대 4949 trial)를 SEA=0/이상치/중복 없이 뽑아내고 있어 job 생성·제출·결과 추출(SEA, Total_Mass, Internal_Energy, Total_Volume)까지 자동화가 된 상태로 판단. PCF(반력)는 스코프에서 제외하기로 함(질량·SEA만으로 진행).
 - [x] DOE 샘플링 + 실제 FE 해석으로 (X, Y) 데이터셋 확보
   - (2026-09-22) 팀원이 아바쿠스 쪽에서 자체적으로 1차 DOE 100 trial 실행, `simulation_results.csv`로 전달받음(원본을 `doe_results_raw_20260922.csv`로 보관). 변수명이 B1~B9(Bumper_Beam), C1~C10(Crash_Box) 19개로, 레포에 있는 `doe_points.csv`/`generate_doe_geometry.py`의 9변수 체계(t_beam, beam_radius, ...)와 이름이 다름 — 설계변수 구성이 팀원 쪽에서 전반적으로 개정된 것으로 보이나 물리적 정의·LB/UB는 아직 미확인, 팀원에게 확인 요청한 상태
   - (2026-09-22) 팀원 확인 결과: 이 19변수의 좁은 변동폭(±1.7~3.3%)은 ISO 공차 기준으로 잡은 것이 맞음(의도된 값, 버그 아님). 다만 그래서 이 100 trial은 **설계공간 탐색용 DOE가 아니라 하나의 공칭 형상 주변을 제조공차 수준으로만 흔든 노이즈 스터디**임이 명확해짐 — `DOE_sampling.ipynb`가 정의한 실제 설계변수 범위(t_beam/beam_radius/beam_height/t_box/box_length/rib_offset/fillet_center_offset, 대부분 ±15%, beam_height만 -10%/+15%)와는 범위 폭이 5~9배 차이. 표본을 더 뽑는 것으로는 해결 안 됨(같은 좁은 범위 안에서는 노이즈 분산 추정만 정밀해질 뿐, 설계 선택에 따른 SEA 변화 신호 자체가 데이터에 없음) — 진단 근거는 `design_matrix_diagnostics_20260922.py`(입력변수 간 다중공선성 없음, PCA 유효차원 15/19 — 변수 자체는 독립적으로 잘 흔듦, 문제는 오직 범위)/`linear_sensitivity_20260922.py`(선형회귀 10-seed 평균 CV R²=-0.065±0.073)/`kriging_first_pass_20260922.py`(크리깅 10-seed 평균 CV R²=0.182±0.039) 참고
