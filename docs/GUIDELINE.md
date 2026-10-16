@@ -115,6 +115,28 @@
 
 (2026-08-27 기준 위 표는 참고용 — 실제 서로게이트는 크리깅으로 진행하고, 위 개념 중 "순차 보강"은 파이프라인 11단계에 그대로 반영됨)
 
+# PAPER.md 코드/노트북 대응표 (2026-10-16, PAPER.md 부록에서 이전)
+
+PAPER.md는 결과 발표용 문서라 본문에 코드/파일명을 직접 적지 않기로 함(지도교수 미팅 피드백과 별개로, 논문 서술 관례상 본문에 구현 파일을 인용하지 않는 것이 일반적). 어느 절이 어느 코드로 뒷받침되는지는 여기 한 곳에 모아 관리한다.
+
+| 논문 절 | 관련 파일 |
+|---|---|
+| 3.3 (실험계획법) | `DOE_sampling.ipynb` |
+| 3.3 (Case 1~5 DOE 원본 데이터) | `doe_results_raw_20260922.csv`(100), `doe_results_raw_20260923.csv`(603), `doe_results_raw_20260929.csv`(4949), `doe_results_raw_20261001.csv`(888, 불확실성 변수 U1~U3 첫 포함), `doe_results_raw_20261007.csv`(2932) |
+| 3.3 (설계행렬 진단: 다중공선성·PCA 유효차원) | `design_matrix_diagnostics_20260922.py` |
+| 3.3, 3.4 (범위 확대 vs 표본 증가 기여도 분리 실험) | `pdd_range_vs_samples_ablation_20260923.py` |
+| 2.1, 3.4 (PDD 검증 및 민감도 분석 이론) | `validation_and_benchmarks/PDD_Legendre_ver4.ipynb`, `PDD_bumper_SEA.ipynb` |
+| 3.4 (PDD 실데이터 분석: Case 1~5 비교) | `pdd_first_pass_20260922.py`, `pdd_second_pass_20260923.py`, `pdd_third_pass_20260929.py`, `pdd_fourth_pass_20261001.py`, `pdd_fifth_pass_20261007.py` |
+| 3.4 (Case 6 집중 재해석 독립 재검증) | `pdd_sixth_pass_20261014.py` |
+| 3.4 (Case 1~6 종합 요약표, m/S 표기) | `pdd_case_summary_20261016.py` → `pdd_case_summary_20261016.pdf`/`.png`(그림 3) |
+| 3.4 (선형회귀 기반 교차검증, 로컬 민감도) | `linear_sensitivity_20260922.py` |
+| 3.4 (민감도 비교 그림) | `pdd_sensitivity_comparison_20260929.png`(그림 1, 3패널, 생성: `pdd_sensitivity_plot_20260929.py`), `pdd_sensitivity_ranking_20261001.pdf`/`.png`(그림 2, Case 4 순위표, 생성: `pdd_sensitivity_table_20261001.py`), Case 1·2 2패널 버전 `pdd_sensitivity_comparison_20260923.png`(PAPER.md 미사용, 참고용) |
+| 3.4 (상호작용 S=1 vs S=2 ablation) | `pdd_interaction_ablation_20261007.py` |
+| 3.5 (PDD vs 크리깅 비교, 합성 벤치마크) | `validation_and_benchmarks/PDD_vs_Kriging_benchmark.ipynb` |
+| 3.5 (크리깅 실데이터 예비 검증: Case 1/Case 2 비교) | `kriging_first_pass_20260922.py`, `kriging_second_pass_20260923.py` |
+| 3.5, 3.6 (크리깅 서로게이트 골격, 강건 목적함수·최적화) | `Kriging_bumper_SEA.ipynb` |
+| 3.7 (능동학습·베이지안 최적화, 미구현) | *(노트북 미작성)* — 검토 내용은 이 문서의 "AI 요소 추가" 절 |
+
 # 진행 상황 (최근 업데이트: 2026-10-16)
 
 - [x] validation_and_benchmarks/PDD_Legendre_ver4.ipynb Case 1 검증 및 수정 (학습/검증 분리 기반 차수 선택, 스케일링 수정)

@@ -1,7 +1,7 @@
 """
 pdd_sensitivity_table_20261001.py
 
-목적: 4차 DOE(888 trial, 노이즈 U1~U3 포함) PDD 민감도 순위를 팀원 공유용 PDF 표로 출력.
+목적: Case 4 DOE(888 trial, 불확실성 변수 U1~U3 포함) PDD 민감도 순위를 팀원 공유용 PDF 표로 출력.
       pdd_fourth_pass_20261001.py의 결과를 그대로 표로 렌더링.
 """
 
@@ -21,7 +21,7 @@ HEADER_BG = "#1a1a19"
 
 def main():
     df = load_clean("doe_results_raw_20261001.csv")
-    res = run_pdd_generic(df, VAR_COLS, "4차 DOE (2026-10-01)")
+    res = run_pdd_generic(df, VAR_COLS, "Case 4 DOE")
 
     rows = res["rows"]
     cum = 0.0
@@ -62,11 +62,11 @@ def main():
                 cell.get_text().set_color(MUTED)
             cell.set_facecolor("#fcfcfb")
 
-    fig.suptitle("PDD 민감도 순위 — 4차 DOE (N=888)", fontsize=13, color=HEADER_BG, y=0.995)
+    fig.suptitle("PDD 민감도 순위 — Case 4 (N=888)", fontsize=13, color=HEADER_BG, y=0.995)
     fig.text(0.5, 0.01,
-              f"홀드아웃 검증: n={res['best_n']}, y={res['best_y']} (상호작용 없음), "
+              f"홀드아웃 검증: m={res['best_n']}, S={res['best_y']} (상호작용 없음), "
               f"검증 R²={res['cv_mean']:.3f}±{(sum((r-res['cv_mean'])**2 for r in res['r2s'])/len(res['r2s']))**0.5:.3f}  |  "
-              f"굵게/파란 계열=누적 85% 이내 설계변수, 주황=노이즈 변수(U1~U3)",
+              f"굵게/파란 계열=누적 85% 이내 설계변수, 주황=불확실성 변수(U1~U3)",
               ha="center", fontsize=7.5, color=MUTED)
 
     plt.tight_layout(rect=[0, 0.02, 1, 0.97])

@@ -1,8 +1,8 @@
 """
 pdd_sensitivity_plot_20260923.py
 
-목적: pdd_second_pass_20260923.py가 계산한 1차/2차 PDD 민감도 지수(SEA 분산 기여율)를
-      발표/보고서용 막대그래프로 시각화. 1차·2차 둘 다에서 상위 5위 안에 들었던 변수(B9, B8)를
+목적: pdd_second_pass_20260923.py가 계산한 Case 1/Case 2 PDD 민감도 지수(SEA 분산 기여율)를
+      발표/보고서용 막대그래프로 시각화. Case 1·Case 2 둘 다에서 상위 5위 안에 들었던 변수(B9, B8)를
       강조색으로, 나머지는 회색으로 표시해 "데이터가 바뀌어도 살아남은 신호"를 한눈에 보여줌.
 
 색상: dataviz 스킬의 검증된 기본 팔레트(references/palette.md)에서 강조=blue(#2a78d6),
@@ -61,8 +61,8 @@ def main():
     df1 = load_df1()
     df2 = load_second_pass("doe_results_raw_20260923.csv")
 
-    res1 = run_pdd(df1, "1차 DOE (2026-09-22)")
-    res2 = run_pdd(df2, "2차 DOE (2026-09-23)")
+    res1 = run_pdd(df1, "Case 1 DOE (2026-09-22)")
+    res2 = run_pdd(df2, "Case 2 DOE (2026-09-23)")
 
     top1 = {name for name, _ in res1["rows"][:5]}
     top2 = {name for name, _ in res2["rows"][:5]}
@@ -73,10 +73,10 @@ def main():
     for ax in axes:
         ax.set_facecolor("#fcfcfb")
 
-    plot_panel(axes[0], res1["rows"], shared, "1차 DOE (ISO 공차 범위)", len(df1))
-    plot_panel(axes[1], res2["rows"], shared, "2차 DOE (확대 범위)", len(df2))
+    plot_panel(axes[0], res1["rows"], shared, "Case 1 DOE (ISO 공차 범위)", len(df1))
+    plot_panel(axes[1], res2["rows"], shared, "Case 2 DOE (확대 범위)", len(df2))
 
-    fig.suptitle("PDD 민감도 분석: 1차 vs 2차 DOE 비교", fontsize=14, color=TEXT_PRIMARY, y=1.02)
+    fig.suptitle("PDD 민감도 분석: Case 1 vs Case 2 DOE 비교", fontsize=14, color=TEXT_PRIMARY, y=1.02)
     fig.text(0.5, -0.02,
               f"파란색 = 두 데이터셋 모두 상위 5위 안에 든 변수({', '.join(sorted(shared))}) — "
               "데이터가 바뀌어도 일관되게 중요했던 신호",
